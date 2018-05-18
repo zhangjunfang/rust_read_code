@@ -1,0 +1,9 @@
+[package]
+name = "ecode_decode"
+version = "0.1.0"
+authors = ["zhangboyu"]
+
+[dependencies]
+byteorder ="1.2.3"
+error-chain = "0.11.0"
+

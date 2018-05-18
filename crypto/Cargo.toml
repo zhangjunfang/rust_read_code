@@ -1,0 +1,12 @@
+[package]
+name = "crypto"
+version = "0.1.0"
+authors = ["zhangboyu"]
+
+[dependencies]
+error-chain = "0.11.0"
+data-encoding = "2.1.1"
+ring = "0.12.1"
+bitflags="1.0.3"
+memmap = "0.6.2"
+num_cpus = "1.8.0"

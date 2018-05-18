@@ -1,0 +1,9 @@
+[package]
+name = "rand"
+version = "0.1.0"
+authors = ["zhangboyu"]
+
+[dependencies]
+byteorder = "1.2.3"
+error-chain = "0.11.0"
+rand = "0.4.2"

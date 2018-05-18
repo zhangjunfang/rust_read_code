@@ -1,0 +1,8 @@
+[package]
+name = "os_2"
+version = "0.1.0"
+authors = ["zhangboyu"]
+
+[dependencies]
+error-chain = "0.11.0"
+regex = "1.0.0"
