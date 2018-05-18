@@ -1,0 +1,9 @@
+[package]
+name = "echo_udp"
+version = "0.1.0"
+authors = ["roo"]
+
+[dependencies]
+tokio ="0.1.6"
+[dependencies.futures]
+version = "0.1.20"

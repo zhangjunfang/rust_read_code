@@ -1,0 +1,7 @@
+[package]
+name = "tokio_hello_word"
+version = "0.1.0"
+authors = ["zhangboyu"]
+
+[dependencies]
+tokio="0.1.6"

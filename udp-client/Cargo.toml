@@ -1,0 +1,8 @@
+[package]
+name = "udp-client"
+version = "0.1.0"
+authors = ["zhangboyu"]
+
+[dependencies]
+tokio="0.1.6"
+futures="0.1.20"
