@@ -1,0 +1,18 @@
+[package]
+name = "http-proxy"
+version = "0.1.0"
+authors = ["zhangboyu"]
+
+[[bin]]
+name = "proxy"
+path = "src/main.rs"
+
+[[bin]]
+name = "server"
+path = "src/server.rs"
+
+[dependencies]
+env_logger = "0.5"
+futures = "0.1"
+actix = "0.5"
+actix-web = { version = "^0.6", features=["alpn"] }
