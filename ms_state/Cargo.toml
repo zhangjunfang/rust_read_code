@@ -1,0 +1,8 @@
+[package]
+name = "ms_state"
+version = "0.1.0"
+authors = ["zhangjunfang <zhangjunfang0505@163.com>"]
+
+[dependencies]
+actix="0.7"
+actix-web="0.7"

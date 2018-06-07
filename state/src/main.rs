@@ -1,15 +1,5 @@
-#![cfg_attr(feature = "cargo-clippy", allow(needless_pass_by_value))]
-//! There are two level of statefulness in actix-web. Application has state
-//! that is shared across all handlers within same Application.
-//! And individual handler can have state.
-//!
-//! > **Note**: http server accepts an application factory rather than an
-//! application > instance. Http server constructs an application instance for
-//! each thread, > thus application state
-//! > must be constructed multiple times. If you want to share state between
-//! different > threads, a shared object should be used, e.g. `Arc`.
-//!
-//! Check [user guide](https://actix.rs/book/actix-web/sec-2-application.html) for more info.
+//#![cfg_attr(feature = "cargo-clippy", allow(needless_pass_by_value))]
+
 
 extern crate actix;
 extern crate actix_web;
@@ -25,7 +15,7 @@ struct AppState {
 }
 
 /// simple handle
-fn index(req: HttpRequest<AppState>) -> HttpResponse {
+fn index(req: &HttpRequest<AppState>) -> HttpResponse {
     println!("{:?}", req);
     req.state().counter.set(req.state().counter.get() + 1);
 

@@ -1,11 +1,11 @@
 [package]
 name = "state"
 version = "0.1.0"
-authors = ["Nikolay Kim <fafhrd91@gmail.com>"]
-workspace = "../"
+authors = ["zhangjunfang <zhangjunfang0505@163.com>"]
 
 [dependencies]
 futures = "0.1"
 env_logger = "0.5"
-actix = "0.5"
-actix-web = "^0.6"
+
+actix = "0.7"
+actix-web = "0.7"

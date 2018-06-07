@@ -1,0 +1,7 @@
+[package]
+name = "net-connect-2"
+version = "0.1.0"
+authors = ["zhangjunfang <zhangjunfang0505@163.com>"]
+
+[dependencies]
+crossbeam-channel = "0.2.4"

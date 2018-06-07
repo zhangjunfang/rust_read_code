@@ -1,0 +1,17 @@
+[package]
+name = "web-basic"
+version = "0.1.0"
+authors = ["zhangjunfang <zhangjunfang0505@163.com>"]
+
+[dependencies]
+actix-web = "0.7"
+env_logger = "0.5"
+actix = "0.7"
+num_cpus="*"
+futures = "*"
+serde = "*"
+serde_json = "1.0"
+serde_derive = "1.0"
+json = "*"
+bytes="*"
+
