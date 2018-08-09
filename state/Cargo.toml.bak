@@ -1,8 +1,11 @@
 [package]
 name = "state"
 version = "0.1.0"
+<<<<<<< HEAD
 authors = ["zhangjunfang <zhangjunfang0505@163.com>"]
-
+=======
+authors = ["zhangboyu"]
+>>>>>>> 3014f965707a93140fd94e4bc116e025e13af175
 
 [dependencies]
 futures = "0.1"
