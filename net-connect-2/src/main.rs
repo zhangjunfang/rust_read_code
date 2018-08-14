@@ -1,12 +1,24 @@
-
-#[macro_use]
+extern crate thread_pool;
 extern crate crossbeam_channel  as channel ;
-use std::net::{TcpListener, TcpStream};
+extern crate  num_cpus as cpu ;
+use thread_pool::ThreadPool;
+use std::net::{TcpListener};
 use std::thread;
-use std::io::{Read,Write,BufReader};
+use std::io::{Read};
 use std::error::Error;
 use channel::Receiver;
-use channel::Sender;
+use thread_pool::Task;
+use std::vec::Vec;
+struct  Message{
+    ms:String,
+}
+//执行线程池中的任务
+impl Task for Message{
+    fn run(self){
+        println!("thread  start  handle  ====={:#?}===========", self.ms )
+    }
+}
+
 fn main() {
     let tcplistener = TcpListener::bind("0.0.0.0:9090").unwrap();
     let ttl = tcplistener.set_ttl(200u32);
@@ -17,6 +29,11 @@ fn main() {
         }
     }
     let (s,r)=channel::bounded::<String>(4096*1024);
+    let rr=r.clone();
+    let child = thread::spawn(move || {
+        logic(rr);
+    });
+
 
     for stream in tcplistener.incoming() {
         match stream {
@@ -34,8 +51,7 @@ fn main() {
                 let us = t.read(&mut buffer).unwrap();
                 let mut temp = String::from_utf8_lossy(&buffer[..us]);
                 //每次获得到的字符串消息追加到队列中
-                s.send(String::from(temp.as_ref()));
-                logic(&mut t,r);
+                s.send(String::from(temp));
             },
             //发生异常数据处理
             Err(e) => {
@@ -43,44 +59,43 @@ fn main() {
             },
         };
     }
+    child.join();
 }
 
-fn logic(stream: &mut TcpStream,r:Receiver<String>) {
+fn logic(r:Receiver<String>) {
+    //开启线程池处理逻辑
+    let (s,p)= ThreadPool::fixed_size(cpu::get());
     //每次获取数据
     let mut last ="";
     while r.len()>0 {
-        let mut content=r.recv().unwrap();
-        if content.contains("\n") {
-            //获取内容直接是以换行符结尾的情况
-            if content.ends_with("\n") {
-                //遍历分割的字符串
-                for c in content.split("\n") {
-                    if c.trim().len() != 0usize && !c.is_empty() {
-                        handle(String::from(c));
-                    }
-                }
-            } else { //不是以换行符结尾的情况，并且包含换行符
-                //倒叙遍历目的：是为了获取最后不是换行符结束的数据
-                let mut sign: u8 = 0u8;
-                for c in content.rsplit("\n") {
-                    sign = sign + 1u8;
-                    if sign == 1u8 {
-                        last = c;
-                        continue;
-                    }
-                    if c.trim().len() != 0usize && !c.is_empty() {
-                        handle(String::from(c));
-                    }
-                }
-                println!("特殊情况：：：{:#?}", last);
+        let  mut content = r.recv().unwrap();
+        content = last.to_owned() + content.trim();
+        if  content.contains("\n") {
+            let mut b :bool=false;
+            if ! content.ends_with("\n") {
+                b=true;
             }
+            let v: Vec<String>=content.split("\n").collect();
+            let mut i: usize=0usize;
+            let len=v.len();
+            for c in v{
+                i=i+1usize;
+                let m=c.trim();
+                if b && i==len {
+                    last = &*c;
+                    b=false;
+                    continue;
+                }
+                if ! m.is_empty(){
+                    //s.send(Message{ms:String::from(m)});
+                    s.send(Message{ms:c});
+                }
+            }
+        }else{
+            last=&content;
         }
+        println!("不完整数据：：：{:#?}",last);
     }
-
+   p.await_termination();
 }
 
-fn handle(content: String) {
-    thread::spawn(move || {
-        println!("thread  start  handle  ====={:#?}===========", content)
-    });
-}

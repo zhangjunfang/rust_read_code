@@ -1,0 +1,13 @@
+[package]
+name = "net_tokio_connect"
+version = "0.1.0"
+authors = ["zhangjunfang <zhangjunfang0505@163.com>"]
+
+[dependencies]
+tokio = "0.1.7"
+tokio-codec = "0.1.0"
+tokio-io = "0.1.7"
+bytes = "0.4.9"
+
+
+

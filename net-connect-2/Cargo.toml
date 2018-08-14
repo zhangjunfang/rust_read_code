@@ -5,3 +5,5 @@ authors = ["zhangjunfang <zhangjunfang0505@163.com>"]
 
 [dependencies]
 crossbeam-channel = "0.2.4"
+thread-pool = "0.1.1"
+num_cpus = "1.8.0"
